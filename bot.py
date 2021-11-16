@@ -1,11 +1,11 @@
 from dotenv import load_dotenv
 from os import getenv
+import requests
 
-load_dotenv() # take env vars from .env
+load_dotenv()
 
 #!/usr/bin/env python
 # pylint: disable=C0116,W0613
-# This program is dedicated to the public domain under the CC0 license.
 
 """
 Simple Bot to reply to Telegram messages.
@@ -51,7 +51,8 @@ def help_command(update: Update, context: CallbackContext) -> None:
 
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
-    update.message.reply_text(update.message.text)
+    joke = requests.get('https://jokes-bapack2-api.herokuapp.com/v1/text/random').json()['data']
+    update.message.reply_text(joke)
 
 
 def main() -> None:
