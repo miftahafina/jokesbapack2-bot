@@ -7,19 +7,6 @@ load_dotenv()
 #!/usr/bin/env python
 # pylint: disable=C0116,W0613
 
-"""
-Simple Bot to reply to Telegram messages.
-
-First, a few handler functions are defined. Then, those functions are passed to
-the Dispatcher and registered at their respective places.
-Then, the bot is started and runs until we press Ctrl-C on the command line.
-
-Usage:
-Basic Echobot example, repeats messages.
-Press Ctrl-C on the command line or send a signal to the process to stop the
-bot.
-"""
-
 import logging
 
 from telegram import Update, ForceReply
@@ -37,20 +24,17 @@ logger = logging.getLogger(__name__)
 # context.
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
-    user = update.effective_user
-    update.message.reply_markdown_v2(
-        fr'Hi {user.mention_markdown_v2()}\!',
-        reply_markup=ForceReply(selective=True),
-    )
+    update.message.reply_text(f'Halo, {update.message.chat.first_name} {update.message.chat.last_name}!')
+    update.message.reply_text('Kirim pesan apa saja, dan saya akan membalasnya dengan jokes bapack2.')
 
 
 def help_command(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /help is issued."""
-    update.message.reply_text('Help!')
+    update.message.reply_text('Kirim pesan apa saja, dan saya akan membalasnya dengan jokes bapack2.')
 
 
-def echo(update: Update, context: CallbackContext) -> None:
-    """Echo the user message."""
+def joke(update: Update, context: CallbackContext) -> None:
+    """Send user a random joke."""
     joke = requests.get('https://jokes-bapack2-api.herokuapp.com/v1/text/random').json()['data']
     update.message.reply_text(joke)
 
@@ -67,8 +51,8 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("help", help_command))
 
-    # on non command i.e message - echo the message on Telegram
-    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+    # on non command i.e message - send a random joke on Telegram
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, joke))
 
     # Start the Bot
     updater.start_polling()
