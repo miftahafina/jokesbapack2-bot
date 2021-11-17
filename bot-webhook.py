@@ -47,7 +47,7 @@ def error(update, context) -> None:
 def main() -> None:
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
-    updater = Updater(os.getenv('BOT_TOKEN'))
+    updater = Updater(os.environ.get('BOT_TOKEN', os.getenv('BOT_TOKEN')))
 
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
@@ -64,9 +64,9 @@ def main() -> None:
 
     # Start the Bot using webhook
     updater.start_webhook(listen="0.0.0.0",
-                          port=int(os.environ.get('PORT', 5000)),
-                          url_path=os.getenv('BOT_TOKEN'),
-                          webhook_url=os.getenv('APP_URL') + os.getenv('BOT_TOKEN'))
+                          port=int(os.environ.get('HEROKU_PORT', os.getenv('HEROKU_PORT'))),
+                          url_path=(os.environ.get('BOT_TOKEN', os.getenv('BOT_TOKEN'))),
+                          webhook_url=os.environ.get('HEROKU_APP_URL', os.getenv('HEROKU_APP_URL')) + os.environ.get('BOT_TOKEN', os.getenv('BOT_TOKEN')))
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
