@@ -10,4 +10,12 @@ Get random jokes bapack2 from [jokes-bapack2-api](https://github.com/andhikayuan
 - requests
 
 ## How to Run
-(Soon)
+- Add bot using botfather from telegram app
+- Clone this repo
+```git clone https://github.com/miftahafina/jokesbapack2-bot.git```
+- ```cd jokesbapack2-bot```
+- ```pipenv install```
+- ```cp .env.example .env```
+- Change ```BOT_TOKEN``` on ```.env``` file
+- ```pipenv run python bot-polling.py```
+- Now you can chat with your bot
