@@ -1,73 +1,81 @@
-from dotenv import load_dotenv
-import os
-import requests
-
-load_dotenv()
-
 #!/usr/bin/env python
-# pylint: disable=C0116,W0613
+# -*- coding: utf-8 -*-
+# This program is dedicated to the public domain under the CC0 license.
+
+"""
+Simple Bot to reply to Telegram messages.
+First, a few handler functions are defined. Then, those functions are passed to
+the Dispatcher and registered at their respective places.
+Then, the bot is started and runs until we press Ctrl-C on the command line.
+Usage:
+Basic Echobot example, repeats messages.
+Press Ctrl-C on the command line or send a signal to the process to stop the
+bot.
+"""
 
 import logging
+import os
 
-from telegram import Update, ForceReply
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 # Enable logging
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
-)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 
-
+PORT = 443
 # Define a few command handlers. These usually take the two arguments update and
-# context.
-def start(update: Update, context: CallbackContext) -> None:
+# context. Error handlers also receive the raised TelegramError object in error.
+
+
+def start(update, context):
     """Send a message when the command /start is issued."""
-    update.message.reply_text(f'Halo, {update.message.chat.first_name} {update.message.chat.last_name}!')
-    update.message.reply_text('Kirim pesan apa saja, dan saya akan membalasnya dengan jokes bapack2.')
+    update.message.reply_text('Hi!')
 
 
-def help_command(update: Update, context: CallbackContext) -> None:
+def help(update, context):
     """Send a message when the command /help is issued."""
-    update.message.reply_text('Kirim pesan apa saja, dan saya akan membalasnya dengan jokes bapack2.')
+    update.message.reply_text('Help!')
 
 
-def joke(update: Update, context: CallbackContext) -> None:
-    """Send user a random joke."""
-    joke = requests.get('https://jokes-bapack2-api.herokuapp.com/v1/text/random').json()['data']
-    update.message.reply_text(joke)
+def echo(update, context):
+    """Echo the user message."""
+    update.message.reply_text(update.message.text)
 
 
-def error(update, context) -> None:
+def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 
-def main() -> None:
+def main():
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
-    updater = Updater(os.environ.get('BOT_TOKEN', os.getenv('BOT_TOKEN')))
+    # Make sure to set use_context=True to use the new context based callbacks
+    # Post version 12 this will no longer be necessary
+    updater = Updater(
+        "2105811527:AAGu2EhKy3rpkdYmOmpT75ugJDLMlhHTTTY", use_context=True)
 
     # Get the dispatcher to register handlers
-    dispatcher = updater.dispatcher
+    dp = updater.dispatcher
 
     # on different commands - answer in Telegram
-    dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(CommandHandler("help", help_command))
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler("help", help))
 
-    # on non command i.e message - send a random joke on Telegram
-    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, joke))
+    # on noncommand i.e message - echo the message on Telegram
+    dp.add_handler(MessageHandler(Filters.text, echo))
 
-    # log all error
-    dispatcher.add_error_handler(error)
+    # log all errors
+    dp.add_error_handler(error)
 
-    # Start the Bot using webhook
+    # Start the Bot
     updater.start_webhook(listen="0.0.0.0",
                           port=int(os.environ.get('PORT', 5000)),
                           url_path="2105811527:AAGu2EhKy3rpkdYmOmpT75ugJDLMlhHTTTY",
                           webhook_url="https://jokesbapack2-bot.herokuapp.com/" + "2105811527:AAGu2EhKy3rpkdYmOmpT75ugJDLMlhHTTTY")
-
+    # updater.bot.set_webhook(url=settings.WEBHOOK_URL)
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
