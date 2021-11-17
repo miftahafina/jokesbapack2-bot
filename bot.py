@@ -19,6 +19,12 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
+# app variables
+BOT_TOKEN=os.environ.get('BOT_TOKEN', os.getenv('BOT_TOKEN'))
+HEROKU_PORT=int(os.environ.get('HEROKU_PORT', os.getenv('HEROKU_PORT')))
+HEROKU_APP_URL=os.environ.get('HEROKU_APP_URL', os.getenv('HEROKU_APP_URL'))
+JOKESBAPACK2_API_URL=os.environ.get('JOKESBAPACK2_API_URL', os.getenv('JOKESBAPACK2_API_URL'))
+
 
 # Define a few command handlers. These usually take the two arguments update and
 # context.
@@ -35,7 +41,7 @@ def help_command(update: Update, context: CallbackContext) -> None:
 
 def joke(update: Update, context: CallbackContext) -> None:
     """Send user a random joke."""
-    joke = requests.get('https://jokes-bapack2-api.herokuapp.com/v1/text/random').json()['data']
+    joke = requests.get(JOKESBAPACK2_API_URL).json()['data']
     update.message.reply_text(joke)
 
 
@@ -47,7 +53,7 @@ def error(update, context) -> None:
 def main() -> None:
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
-    updater = Updater("2105811527:AAGu2EhKy3rpkdYmOmpT75ugJDLMlhHTTTY")
+    updater = Updater(BOT_TOKEN)
 
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
@@ -64,9 +70,9 @@ def main() -> None:
 
     # Start the Bot using webhook
     updater.start_webhook(listen="0.0.0.0",
-                          port=int(os.environ.get('PORT', 5000)),
-                          url_path="2105811527:AAGu2EhKy3rpkdYmOmpT75ugJDLMlhHTTTY",
-                          webhook_url="https://afin-bot.herokuapp.com/" + "2105811527:AAGu2EhKy3rpkdYmOmpT75ugJDLMlhHTTTY")
+                          port=HEROKU_PORT,
+                          url_path=BOT_TOKEN,
+                          webhook_url=HEROKU_APP_URL + BOT_TOKEN)
 
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
