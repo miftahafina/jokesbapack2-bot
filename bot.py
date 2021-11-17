@@ -30,7 +30,6 @@ HEROKU_PORT=5000
 HEROKU_APP_URL="https://afin-bot.herokuapp.com/"
 JOKESBAPACK2_API_URL="https://jokes-bapack2-api.herokuapp.com/v1/text/random"
 
-
 # Define a few command handlers. These usually take the two arguments update and
 # context.
 def start(update: Update, context: CallbackContext) -> None:
@@ -58,7 +57,7 @@ def error(update, context) -> None:
 def main() -> None:
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
-    updater = Updater(BOT_TOKEN)
+    updater = Updater("2105811527:AAGu2EhKy3rpkdYmOmpT75ugJDLMlhHTTTY")
 
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
@@ -75,9 +74,9 @@ def main() -> None:
 
     # Start the Bot using webhook
     updater.start_webhook(listen="0.0.0.0",
-                          port=HEROKU_PORT,
-                          url_path=BOT_TOKEN,
-                          webhook_url=f'{HEROKU_APP_URL}{BOT_TOKEN}')
+                          port=int(os.environ.get('HEROKU_PORT', 5000)),
+                          url_path="2105811527:AAGu2EhKy3rpkdYmOmpT75ugJDLMlhHTTTY",
+                          webhook_url=f"{'https://afin-bot.herokuapp.com/'}{'2105811527:AAGu2EhKy3rpkdYmOmpT75ugJDLMlhHTTTY'}")
 
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
