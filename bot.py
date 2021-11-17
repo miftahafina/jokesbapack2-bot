@@ -67,7 +67,7 @@ def main() -> None:
     updater.start_webhook(listen="0.0.0.0",
                           port=int(os.environ.get('PORT', 5000)),
                           url_path="2105811527:AAGu2EhKy3rpkdYmOmpT75ugJDLMlhHTTTY",
-                          webhook_url="https://jokesbapack2-bot.herokuapp.com/" + "2105811527:AAGu2EhKy3rpkdYmOmpT75ugJDLMlhHTTTY")
+                          webhook_url="https://afin-bot.herokuapp.com/" + "2105811527:AAGu2EhKy3rpkdYmOmpT75ugJDLMlhHTTTY")
 
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
