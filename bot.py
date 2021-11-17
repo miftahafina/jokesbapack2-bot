@@ -35,8 +35,7 @@ def help_command(update: Update, context: CallbackContext) -> None:
 
 def joke(update: Update, context: CallbackContext) -> None:
     """Send user a random joke."""
-    # joke = requests.get('https://jokes-bapack2-api.herokuapp.com/v1/text/random').json()['data']
-    joke = 'xixixi'
+    joke = requests.get('https://jokes-bapack2-api.herokuapp.com/v1/text/random').json()['data']
     update.message.reply_text(joke)
 
 
