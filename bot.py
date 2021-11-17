@@ -77,7 +77,7 @@ def main() -> None:
     updater.start_webhook(listen="0.0.0.0",
                           port=HEROKU_PORT,
                           url_path=BOT_TOKEN,
-                          webhook_url=HEROKU_APP_URL + BOT_TOKEN)
+                          webhook_url=f'{HEROKU_APP_URL}{BOT_TOKEN}')
 
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
