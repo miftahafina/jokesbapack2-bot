@@ -64,9 +64,10 @@ def main() -> None:
 
     # Start the Bot using webhook
     updater.start_webhook(listen="0.0.0.0",
-                          port=int(os.environ.get('HEROKU_PORT', os.getenv('HEROKU_PORT'))),
-                          url_path=(os.environ.get('BOT_TOKEN', os.getenv('BOT_TOKEN'))),
-                          webhook_url=os.environ.get('HEROKU_APP_URL', os.getenv('HEROKU_APP_URL')) + os.environ.get('BOT_TOKEN', os.getenv('BOT_TOKEN')))
+                          port=int(os.environ.get('PORT', 5000)),
+                          url_path="2105811527:AAGu2EhKy3rpkdYmOmpT75ugJDLMlhHTTTY",
+                          webhook_url="https://jokesbapack2-bot.herokuapp.com/" + "2105811527:AAGu2EhKy3rpkdYmOmpT75ugJDLMlhHTTTY")
+
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
