@@ -35,14 +35,14 @@ def help_command(update: Update, context: CallbackContext) -> None:
 
 def joke(update: Update, context: CallbackContext) -> None:
     """Send user a random joke."""
-    joke = requests.get('https://jokes-bapack2-api.herokuapp.com/v1/text/random').json()['data']
+    joke = requests.get(os.environ.get('JOKESBAPACK2_API_URL')).json()['data']
     update.message.reply_text(joke)
 
 
 def main() -> None:
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
-    updater = Updater(os.getenv('BOT_TOKEN'))
+    updater = Updater(os.environ.get('BOT_TOKEN'))
 
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
