@@ -20,10 +20,15 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # app variables
-BOT_TOKEN=os.environ.get('BOT_TOKEN', os.getenv('BOT_TOKEN'))
-HEROKU_PORT=int(os.environ.get('HEROKU_PORT', os.getenv('HEROKU_PORT')))
-HEROKU_APP_URL=os.environ.get('HEROKU_APP_URL', os.getenv('HEROKU_APP_URL'))
-JOKESBAPACK2_API_URL=os.environ.get('JOKESBAPACK2_API_URL', os.getenv('JOKESBAPACK2_API_URL'))
+# BOT_TOKEN=os.environ.get('BOT_TOKEN', os.getenv('BOT_TOKEN'))
+# HEROKU_PORT=int(os.environ.get('HEROKU_PORT', os.getenv('HEROKU_PORT')))
+# HEROKU_APP_URL=os.environ.get('HEROKU_APP_URL', os.getenv('HEROKU_APP_URL'))
+# JOKESBAPACK2_API_URL=os.environ.get('JOKESBAPACK2_API_URL', os.getenv('JOKESBAPACK2_API_URL'))
+
+BOT_TOKEN="2105811527:AAGu2EhKy3rpkdYmOmpT75ugJDLMlhHTTTY"
+HEROKU_PORT=5000
+HEROKU_APP_URL="https://afin-bot.herokuapp.com/"
+JOKESBAPACK2_API_URL="https://jokes-bapack2-api.herokuapp.com/v1/text/random"
 
 
 # Define a few command handlers. These usually take the two arguments update and
