@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from os import getenv
+import os
 import requests
 
 load_dotenv()
@@ -42,7 +42,7 @@ def joke(update: Update, context: CallbackContext) -> None:
 def main() -> None:
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
-    updater = Updater(getenv('BOT_TOKEN'))
+    updater = Updater(os.getenv('BOT_TOKEN'))
 
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
